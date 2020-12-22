@@ -12,5 +12,15 @@ assignees: ''
 **Assignee** : 
 **Part** : 클라이언트/서버
 
-#### Job Description
+### Job Description
 >
+
+### TODO
+1. [ ] Job1
+2. [ ] Job2
+3. [ ] Job3
+
+### Labels
+Estimated time: E: 1h
+Group : client, server
+Urgency: High, UltraHigh, ExtremelyHigh
