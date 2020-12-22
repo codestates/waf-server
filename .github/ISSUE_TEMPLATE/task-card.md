@@ -10,7 +10,7 @@ assignees: ''
 ## Task Card
 
 **Assignee** : 
-**Part** : 클라이언트/서버
+**Part** : 서버
 
 ### Job Description
 >
@@ -22,5 +22,4 @@ assignees: ''
 
 ### Labels
 Estimated time: E: 1h
-Group : client, server
 Urgency: High, UltraHigh, ExtremelyHigh
