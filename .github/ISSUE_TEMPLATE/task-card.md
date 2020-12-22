@@ -9,7 +9,6 @@ assignees: ''
 
 ## Task Card
 
-**Assignee** : 
 **Part** : 서버
 
 ### Job Description
