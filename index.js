@@ -10,7 +10,7 @@ const usersRouter = require("./routes/user");
 const fridgesRouter = require("./routes/fridge");
 const recipesRouter = require("./routes/recipe");
 
-app.use(express.json()); // built-in bodyparser needed to read req.body.
+app.use(express.json());
 
 // 환경변수를 통해 cors production origin 으로 변경
 app.use(
@@ -28,27 +28,15 @@ app.use(
   })
 );
 
+// routes
+app.use("/users", usersRouter);
+app.use("/myfridge", fridgesRouter);
+app.use("/recipes", recipesRouter);
+
 // 배포 테스트용
 app.get("/", (req, res) => {
   res.send("HELLO WORLD");
 });
-
-app.use("/users", usersRouter);
-app.use("/myfridge", fridgesRouter);
-// app.use("/recipes", recipesRouter);
-
-// 반드시 깃헙 API 문서 업데이트 할 것
-
-/*
-// 냉장고 라우트
-app.get("/myfidge/:userid", mainController.myFridge);
-app.put("/myfidge/removeitem", mainController.removeItem);
-app.post("/myfirdge/cart", mainController.cart);
-
-// 레시피 라우트
-app.get("/recipes", mainController.recipe);
-app.get("/recipes/player", mainController.recipePlayer);
-*/
 
 app.listen(port, () => {
   console.log("server on " + port);
