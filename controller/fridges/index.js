@@ -1,12 +1,17 @@
 module.exports = {
-  myfridge: (req, res) => {
-    console.log("my fridge main page");
-    // res.send("my fridge main page");
+  post: {
+    addItem: (req, res) => {
+      res.send("my fridge add your item");
+    },
   },
-  additem: (req, res) => {
-    res.send("my fridge add your item");
+  put: {
+    removeItem: (req, res) => {
+      res.send("my fridge remove item");
+    },
   },
-  removeitem: (req, res) => {
-    res.send("my fridge remove item");
+  get: {
+    myFridge: (req, res) => {
+      res.send("my fridge main page");
+    },
   },
 };
