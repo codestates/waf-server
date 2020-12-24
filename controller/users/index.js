@@ -1,11 +1,13 @@
 module.exports = {
-  signin: (req, res) => {
-    console.log("sign in");
-  },
-  signup: (req, res) => {
-    console.log("sign up");
-  },
-  signout: (req, res) => {
-    console.log("sign out");
+  post: {
+    signin: (req, res) => {
+      res.send("sign in page");
+    },
+    signup: (req, res) => {
+      res.send("sign up page");
+    },
+    signout: (req, res) => {
+      res.send("sign out page");
+    },
   },
 };
