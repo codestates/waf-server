@@ -4,7 +4,7 @@ const session = require("express-session");
 const app = express();
 
 // 환경변수를 통해 production 포트로 변경
-const port = 8080;
+const port = 4000;
 
 const usersRouter = require("./routes/user");
 const fridgesRouter = require("./routes/fridge");
