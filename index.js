@@ -41,8 +41,8 @@ app.get("/", (req, res) => {
 });
 
 const { user } = require("./models/user");
-app.get("/test/:userid", (req, res) => {
-  user
+app.get("/test/:userid", async (req, res) => {
+  await user
     .findOne({
       where: {
         id: req.params.userid,
