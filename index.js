@@ -49,10 +49,7 @@ app.get("/test/:userid", async (req, res) => {
       },
     })
     .then((data) => {
-      console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
+      res.send(data);
     });
 });
 
