@@ -40,6 +40,22 @@ app.get("/", (req, res) => {
   res.send("HELLO WORLD");
 });
 
+const { user } = require("./models/user");
+app.get("/test/:userid", (req, res) => {
+  user
+    .findOne({
+      where: {
+        id: req.params.userid,
+      },
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.listen(port, () => {
   console.log("server on " + port);
 });
