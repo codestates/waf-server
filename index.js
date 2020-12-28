@@ -36,6 +36,11 @@ app.use("/recipes", recipesRouter);
 app.use("/callback", oauthRouter);
 
 // 배포 테스트용
+app.get("/", (req, res) => {
+  res.send("HELLO WORLD");
+});
+
+// 데이터베이스 테스트용
 const { user } = require("./models/user");
 app.get("/test/:userid", (req, res) => {
   user
@@ -45,7 +50,7 @@ app.get("/test/:userid", (req, res) => {
       },
     })
     .then((data) => {
-      console.log(data);
+      res.send(data);
     })
     .catch((err) => {
       console.log(err);
