@@ -41,14 +41,13 @@ app.get("/", (req, res) => {
 });
 
 // 데이터베이스 테스트용
-const { user } = require("./models/user");
+const { User } = require("./models");
 app.get("/test/:userid", (req, res) => {
-  user
-    .findOne({
-      where: {
-        id: req.params.userid,
-      },
-    })
+  User.findOne({
+    where: {
+      id: req.params.userid,
+    },
+  })
     .then((data) => {
       res.send(data);
     })
