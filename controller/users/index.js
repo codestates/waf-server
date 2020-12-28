@@ -1,10 +1,11 @@
+const { user } = require("./models/user");
+
 module.exports = {
   post: {
     signin: (req, res) => {
       const { email, password } = req.body.data;
 
       // 데이터베이스에서 이메일 검색 후, 일치하는 정보가 있으면 세션 부여
-      // models 에서 { user } import 선행 필요
       req.session.regenerate(() => {
         user
           .findOne({

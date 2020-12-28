@@ -52,22 +52,6 @@ app.get("/test/:userid", (req, res) => {
     });
 });
 
-const { user } = require("./models/user");
-app.get("/test/:userid", async (req, res) => {
-  await user
-    .findOne({
-      where: {
-        id: req.params.userid,
-      },
-    })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
 app.listen(port, () => {
   console.log("server on " + port);
 });
