@@ -40,6 +40,22 @@ app.get("/", (req, res) => {
   res.send("HELLO WORLD");
 });
 
+// 데이터베이스 테스트용
+const { User } = require("./models");
+app.get("/test/:userid", (req, res) => {
+  User.findOne({
+    where: {
+      id: req.params.userid,
+    },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.listen(port, () => {
   console.log("server on " + port);
 });

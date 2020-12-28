@@ -1,15 +1,15 @@
+const { User } = require("../../models");
+
 module.exports = {
   post: {
     signin: (req, res) => {
-      const { email, password } = req.body.data;
+      const { email, password } = req.body;
 
       // 데이터베이스에서 이메일 검색 후, 일치하는 정보가 있으면 세션 부여
-      // models 에서 { user } import 선행 필요
       req.session.regenerate(() => {
-        user
-          .findOne({
-            where: { email, password },
-          })
+        User.findOne({
+          where: { email, password },
+        })
           .then((data) => {
             if (!data) {
               return res.status(401).send("Invalid User");
@@ -30,7 +30,7 @@ module.exports = {
         return res.status(422).send("Insufficient User Information");
       }
 
-      user
+      User
         .findOrCreate({
           where: { email },
           defaults: { email, password, username, mobile },
