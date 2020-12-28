@@ -15,7 +15,7 @@ module.exports = {
               return res.status(401).send("Invalid User");
             }
             req.session.userid = data.id;
-            res.status(201).send("Login Succeeded");
+            res.status(201).send({ username: data.username });
           })
           .catch((err) => {
             res.status(404).send(err);
@@ -30,16 +30,17 @@ module.exports = {
         return res.status(422).send("Insufficient User Information");
       }
 
-      User.findOrCreate({
-        where: { email },
-        defaults: { email, password, username, mobile },
-      }).then(async ([user, created]) => {
-        if (!created) {
-          return res.status(409).send("Email Exists");
-        }
-        // 여기서 회원정보반환이 필요한지 의논해보기
-        res.status(201).json(user);
-      });
+      User
+        .findOrCreate({
+          where: { email },
+          defaults: { email, password, username, mobile },
+        })
+        .then(async ([user, created]) => {
+          if (!created) {
+            return res.status(409).send("Email Exists");
+          }
+          res.status(201).send("Signup Succeeded");
+        });
     },
     signout: (req, res) => {
       req.session.destroy(() => {
