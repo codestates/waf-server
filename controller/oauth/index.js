@@ -1,17 +1,15 @@
 require("dotenv").config();
 
 const axios = require("axios");
+const { User } = require("../../models");
 
 module.exports = {
-  // req의 body로 authorization code가 들어옵니다. console.log를 통해 서버의 터미널창에서 확인
-  // console.log("code:", req.body);
-  // authorization code를 이용해 access token을 발급받기 위한 post 요청
-
   // 네이버
-  post: (req, res) => {
+  post: async (req, res) => {
     if (req.body.authorizationCode.length === 18) {
       const clientID = process.env.NAVER_CLIENT_ID;
       const clientSecret = process.env.NAVER_CLIENT_SECRET;
+
       axios({
         method: "post",
         url: "https://nid.naver.com/oauth2.0/token",
@@ -27,12 +25,37 @@ module.exports = {
         },
       })
         .then((response) => {
-          accessToken = response.data.access_token;
+          const accessToken = response.data.access_token;
           console.log("accessToken:", response.data.access_token);
-          res.status(200).json({ accessToken: accessToken });
+          return accessToken;
         })
-        .catch((e) => {
-          res.status(404);
+        .then((token) => {
+          axios
+            .get(`https://openapi.naver.com/v1/nid/me`, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+              const { data } = response;
+
+              User.findOrCreate({
+                where: { email: data.response.email },
+                defaults: {
+                  email: data.response.email,
+                  password: null,
+                  username: data.response.name,
+                  mobile: null,
+                },
+              }).then(async ([user, created]) => {
+                if (!created) {
+                  // 기존 Oauth 로 가입한 회원이 로그인하는 경우
+                  return res.redirect("/myfridge");
+                }
+                res.status(201).send("Signup Succeeded");
+              });
+            })
+            .catch((err) => {
+              res.status(404);
+            });
         });
     }
 
@@ -40,6 +63,7 @@ module.exports = {
     else {
       const clientID = process.env.GOOGLE_CLIENT_ID;
       const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
       axios({
         method: "post",
         url: "https://accounts.google.com/o/oauth2/token",
@@ -51,16 +75,41 @@ module.exports = {
           client_secret: clientSecret,
           code: req.body.authorizationCode,
           grant_type: "authorization_code",
-          redirect_uri: "http://localhost:3000/myfridge",
+          redirect_uri: "http://localhost:3000/users",
         },
       })
         .then((response) => {
-          accessToken = response.data.access_token;
+          const accessToken = response.data.access_token;
           console.log("accessToken:", response.data.access_token);
-          res.status(200).json({ accessToken: accessToken });
+          return accessToken;
         })
-        .catch((e) => {
-          res.status(404);
+        .then((token) => {
+          axios
+            .get(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json`, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+              const { data } = response;
+
+              User.findOrCreate({
+                where: { email: data.email },
+                defaults: {
+                  email: data.email,
+                  password: null,
+                  username: data.name,
+                  mobile: null,
+                },
+              }).then(async ([user, created]) => {
+                if (!created) {
+                  // 기존 Oauth 로 가입한 회원이 로그인하는 경우
+                  return res.redirect("/myfridge");
+                }
+                res.status(201).send("Signup Succeeded");
+              });
+            })
+            .catch((err) => {
+              res.status(404);
+            });
         });
     }
   },
