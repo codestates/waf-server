@@ -48,7 +48,7 @@ module.exports = {
               }).then(async ([user, created]) => {
                 if (!created) {
                   // 기존 Oauth 로 가입한 회원이 로그인하는 경우
-                  return res.redirect("/myfridge");
+                  return res.json({ username: user.username });
                 }
                 res.status(201).send("Signup Succeeded");
               });
@@ -102,7 +102,7 @@ module.exports = {
               }).then(async ([user, created]) => {
                 if (!created) {
                   // 기존 Oauth 로 가입한 회원이 로그인하는 경우
-                  return res.redirect("/myfridge");
+                  return res.json({ username: user.username });
                 }
                 res.status(201).send("Signup Succeeded");
               });
