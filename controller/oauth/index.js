@@ -51,7 +51,7 @@ module.exports = {
           client_secret: clientSecret,
           code: req.body.authorizationCode,
           grant_type: "authorization_code",
-          redirect_uri: "http://localhost:3000/users",
+          redirect_uri: "http://localhost:3000/myfridge",
         },
       })
         .then((response) => {
