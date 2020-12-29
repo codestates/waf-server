@@ -1,5 +1,4 @@
 const { Item } = require("../../models");
-
 module.exports = {
   post: {
     addItem: (req, res) => {
@@ -8,7 +7,6 @@ module.exports = {
       if (!collection.length) {
         return res.status(422).send("Insufficient Item Information");
       }
-
       const expiredAfter = {
         meat: 5,
         seafood: 2,
@@ -54,7 +52,6 @@ module.exports = {
           name: req.body.item,
         },
       });
-
       res.status(205).send("Item Is Removed Successfully");
     },
   },
@@ -63,7 +60,6 @@ module.exports = {
       const items = Item.findAll({
         where: { fk_userid: req.params.userid },
       });
-
       res.status(200).json(items);
     },
   },
