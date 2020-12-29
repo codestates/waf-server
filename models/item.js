@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       category: DataTypes.STRING,
       part: DataTypes.STRING,
       modifiedAt: DataTypes.STRING,
+      expiredAfter: DataTypes.INTEGER,
     },
     {
       sequelize,
