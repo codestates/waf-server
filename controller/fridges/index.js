@@ -3,19 +3,49 @@ const { Item } = require("../../models");
 module.exports = {
   post: {
     addItem: async (req, res) => {
-      // 오늘 산 제품의 경우 createdAt 정보를 넘길 필요 없음
       const { item, category, part, modifiedAt } = req.body;
 
-      if (!item || !category || !part) {
+      console.log(req.body);
+
+      if (!req.body.collection.length) {
         return res.status(422).send("Insufficient Item Information");
       }
 
-      // 오늘 산 제품의 경우, modifiedAt
+      const expiredAfter = {
+        meat: 5,
+        seafood: 2,
+        veges: 5,
+        fruits: 7,
+        eggs: 10,
+        dairy: 7,
+        mandu: 30,
+      };
+
+      console.log(
+        `category: ${category}, expiredAfter: ${expiredAfter[category]}`
+      );
+      // const freshfor = expiredAfterChart[category];
+
+      // 오늘 산 제품의 경우, modifiedAt === ""
       if (!modifiedAt) {
-        await Item.create({ name: item, category, part, modifiedAt: null });
+        await Item.create({
+          name: item,
+          category,
+          part,
+          modifiedAt: null,
+          expiredAfter: expiredAfter[category],
+          fk_userid: req.session.userid,
+        });
         res.status(201).send("Today's Items Are Stored Successfully");
       } else {
-        await Item.create({ name: item, category, part, modifiedAt });
+        await Item.create({
+          name: item,
+          category,
+          part,
+          modifiedAt,
+          expiredAfter: expiredAfter[category],
+          fk_userid: req.session.userid,
+        });
         res.status(201).send("Items Are Stored Successfully");
       }
     },
