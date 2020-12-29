@@ -2,12 +2,10 @@ const { Item } = require("../../models");
 
 module.exports = {
   post: {
-    addItem: async (req, res) => {
-      const { item, category, part, modifiedAt } = req.body;
+    addItem: (req, res) => {
+      const { collection } = req.body;
 
-      console.log(req.body);
-
-      if (!req.body.collection.length) {
+      if (!collection.length) {
         return res.status(422).send("Insufficient Item Information");
       }
 
@@ -21,33 +19,31 @@ module.exports = {
         mandu: 30,
       };
 
-      console.log(
-        `category: ${category}, expiredAfter: ${expiredAfter[category]}`
-      );
-      // const freshfor = expiredAfterChart[category];
+      collection.map(async (food) => {
+        const { item, category, part, modifiedAt } = food;
 
-      // 오늘 산 제품의 경우, modifiedAt === ""
-      if (!modifiedAt) {
-        await Item.create({
-          name: item,
-          category,
-          part,
-          modifiedAt: null,
-          expiredAfter: expiredAfter[category],
-          fk_userid: req.session.userid,
-        });
-        res.status(201).send("Today's Items Are Stored Successfully");
-      } else {
-        await Item.create({
-          name: item,
-          category,
-          part,
-          modifiedAt,
-          expiredAfter: expiredAfter[category],
-          fk_userid: req.session.userid,
-        });
-        res.status(201).send("Items Are Stored Successfully");
-      }
+        if (!modifiedAt) {
+          Item.create({
+            name: item,
+            category,
+            part,
+            modifiedAt: null,
+            expiredAfter: expiredAfter[category],
+            fk_userid: req.session.userid,
+          });
+        } else {
+          Item.create({
+            name: item,
+            category,
+            part,
+            modifiedAt,
+            expiredAfter: expiredAfter[category],
+            fk_userid: req.session.userid,
+          });
+        }
+      });
+
+      return res.status(201).send("Items Are Stored Successfully");
     },
   },
   put: {
