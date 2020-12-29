@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       category: DataTypes.STRING,
       part: DataTypes.STRING,
       modifiedAt: DataTypes.STRING,
+      fk_userid: DataTypes.INTEGER,
+      expiredAfter: DataTypes.INTEGER,
     },
     {
       sequelize,
