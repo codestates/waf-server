@@ -15,7 +15,7 @@ module.exports = {
               return res.status(401).send("Invalid User");
             }
             req.session.userid = data.id;
-            res.status(201).send({ username: data.username });
+            res.status(201).send({ userid: data.id, username: data.username });
           })
           .catch((err) => {
             res.status(404).send(err);
@@ -30,17 +30,15 @@ module.exports = {
         return res.status(422).send("Insufficient User Information");
       }
 
-      User
-        .findOrCreate({
-          where: { email },
-          defaults: { email, password, username, mobile },
-        })
-        .then(async ([user, created]) => {
-          if (!created) {
-            return res.status(409).send("Email Exists");
-          }
-          res.status(201).send("Signup Succeeded");
-        });
+      User.findOrCreate({
+        where: { email },
+        defaults: { email, password, username, mobile },
+      }).then(async ([user, created]) => {
+        if (!created) {
+          return res.status(409).send("Email Exists");
+        }
+        res.status(201).send("Signup Succeeded");
+      });
     },
     signout: (req, res) => {
       req.session.destroy(() => {

@@ -49,7 +49,7 @@ module.exports = {
                 if (!created) {
                   // 기존 Oauth 로 가입한 회원이 로그인하는 경우
                   req.session.userid = user.id;
-                  return res.json({ username: user.username });
+                  return res.json({ userid: user.id, username: user.username });
                 }
                 res.status(201).send("Signup Succeeded");
               });
@@ -104,7 +104,7 @@ module.exports = {
                 if (!created) {
                   // 기존 Oauth 로 가입한 회원이 로그인하는 경우
                   req.session.userid = user.id;
-                  return res.json({ username: user.username });
+                  return res.json({ userid: user.id, username: user.username });
                 }
                 res.status(201).send("Signup Succeeded");
               });
