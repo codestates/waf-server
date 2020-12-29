@@ -2,7 +2,7 @@ const { Item } = require("../../models");
 module.exports = {
   post: {
     addItem: (req, res) => {
-      const { collection } = req.body;
+      const { collection, userid } = req.body;
 
       if (!collection.length) {
         return res.status(422).send("Insufficient Item Information");
@@ -27,7 +27,7 @@ module.exports = {
             part,
             modifiedAt: null,
             expiredAfter: expiredAfter[category],
-            fk_userid: req.session.userid,
+            fk_userid: userid,
           });
         } else {
           Item.create({
@@ -36,7 +36,7 @@ module.exports = {
             part,
             modifiedAt,
             expiredAfter: expiredAfter[category],
-            fk_userid: req.session.userid,
+            fk_userid: userid,
           });
         }
       });
@@ -46,9 +46,10 @@ module.exports = {
   },
   put: {
     removeItem: (req, res) => {
+      // userid 받을 것
       Item.destroy({
         where: {
-          fk_userid: req.session.userid,
+          fk_userid: req.body.userid,
           name: req.body.item,
         },
       });
@@ -56,10 +57,11 @@ module.exports = {
     },
   },
   get: {
-    myFridge: (req, res) => {
-      const items = Item.findAll({
+    myFridge: async (req, res) => {
+      const items = await Item.findAll({
         where: { fk_userid: req.params.userid },
       });
+
       res.status(200).json(items);
     },
   },
