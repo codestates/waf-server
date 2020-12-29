@@ -19,7 +19,7 @@ module.exports = {
         mandu: 30,
       };
 
-      collection.map(async (food) => {
+      collection.map((food) => {
         const { item, category, part, modifiedAt } = food;
 
         if (!modifiedAt) {
@@ -47,8 +47,8 @@ module.exports = {
     },
   },
   put: {
-    removeItem: async (req, res) => {
-      await Item.destroy({
+    removeItem: (req, res) => {
+      Item.destroy({
         where: {
           fk_userid: req.session.userid,
           name: req.body.item,
@@ -59,8 +59,8 @@ module.exports = {
     },
   },
   get: {
-    myFridge: async (req, res) => {
-      const items = await Item.findAll({
+    myFridge: (req, res) => {
+      const items = Item.findAll({
         where: { fk_userid: req.params.userid },
       });
 
