@@ -52,7 +52,7 @@ module.exports = {
                   return res.json({
                     userid: user.id,
                     username: user.username,
-                    oauthToken: "Naver",
+                    ourToken: "Naver",
                   });
                 }
                 res.status(201).send("Signup Succeeded");
@@ -111,7 +111,7 @@ module.exports = {
                   return res.json({
                     userid: user.id,
                     username: user.username,
-                    oauthToken: "Google",
+                    ourToken: "Google",
                   });
                 }
                 res.status(201).send("Signup Succeeded");
