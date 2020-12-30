@@ -14,7 +14,10 @@ module.exports = {
       thumbnail: {
         type: Sequelize.STRING,
       },
-      url: {
+      title: {
+        type: Sequelize.STRING,
+      },
+      videoId: {
         type: Sequelize.STRING,
       },
       // createdAt: {
