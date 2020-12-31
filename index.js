@@ -16,7 +16,7 @@ app.use(express.json());
 // 환경변수를 통해 cors production origin 으로 변경
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://waf-client.s3-website.ap-northeast-2.amazonaws.com",
     methods: "GET,PUT,POST",
     credentials: true,
   })
