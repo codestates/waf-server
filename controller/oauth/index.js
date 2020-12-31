@@ -80,7 +80,8 @@ module.exports = {
           client_secret: clientSecret,
           code: req.body.authorizationCode,
           grant_type: "authorization_code",
-          redirect_uri: "http://localhost:3000/users",
+          redirect_uri:
+            "http://waf-client.s3-website.ap-northeast-2.amazonaws.com/users",
         },
       })
         .then((response) => {
