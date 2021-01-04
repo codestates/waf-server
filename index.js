@@ -35,12 +35,6 @@ app.use("/myfridge", fridgesRouter);
 app.use("/recipes", recipesRouter);
 app.use("/callback", oauthRouter);
 
-app.use(express.static(__dirname)); //here is important thing - no static directory, because all static :)
-
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
 // 배포 테스트용
 app.get("/", (req, res) => {
   res.send("HELLO WORLD");
