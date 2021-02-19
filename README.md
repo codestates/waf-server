@@ -1,4 +1,4 @@
-## 냉장고 관리 및 레시피가 필요할 때, 와프
+## <a href="http://bit.ly/check_out_waf">냉장고 관리 및 레시피가 필요할 때, 와프</a>
 
 ![waf_guest](https://user-images.githubusercontent.com/65207835/107597401-e1252b80-6c5d-11eb-92df-b178b96e97b4.gif)
 
